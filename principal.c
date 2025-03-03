@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 #include "principal.h"
 
 //variáveis globais
-char palavras_secretas[20];
+char palavras_secretas[50];
 char chutes[26];
 int chutes_dados = 0;
 
@@ -34,7 +36,21 @@ void chuta() {
 }
 
 void escolhe_palavra_secreta() {
-	sprintf(palavras_secretas, "MELANCIA");
+	FILE* f;
+
+	f = fopen("palavras.txt", "r");
+
+	int quantidade_palavras;
+	fscanf(f, "%d", &quantidade_palavras);
+
+	srand(time(0));
+	int randomico = rand() % quantidade_palavras;
+
+	for (int i = 0; i <= randomico; i++) {
+		fscanf(f, "%s", palavras_secretas);
+	}
+
+	fclose(f);
 }
 
 int acertou() {
